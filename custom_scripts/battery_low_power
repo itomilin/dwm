@@ -1,0 +1,52 @@
+#!/usr/bin/python3
+
+###
+# Reqs xosd pkg
+###
+
+from subprocess import run, PIPE
+import time
+
+BATTERY_LOW_THRESHOLD = 8
+BATTERY_UP_THRESHOLD = 95
+SHELL_CMD = [ "/usr/bin/osd_cat",
+              "--align=center",
+              "--pos=middle",
+              "--font=-*-*-bold-*-*-*-96-120-*-*-*-*-*-*" ]
+
+def is_charging():
+    with open("/sys/class/power_supply/BAT0/status") as f:
+        return True if f.read().strip('\n') == "Charging" else False
+
+
+def check_capacity():
+    with open("/sys/class/power_supply/BAT0/capacity") as f:
+        return int(f.read())
+
+
+def extra_info():
+    with open("/sys/class/power_supply/BAT0/energy_full") as f:
+        energy_full = int(f.read())
+    with open("/sys/class/power_supply/BAT0/energy_full_design") as f:
+        energy_full_design = int(f.read())
+    with open("/sys/class/power_supply/BAT0/cycle_count") as f:
+        cycle_count = int(f.read())
+    wear_level = int(100 - (energy_full / energy_full_design * 100))
+    ret_str = f"W: {wear_level}%| C: {cycle_count}"
+    #return cycle_count, wear_level
+    return ret_str
+
+
+while True:
+    delay_interval_sec = 15
+    if check_capacity() <= BATTERY_LOW_THRESHOLD and not is_charging():
+        msg = f"!!BATTERY LOW. REMAINING {str(check_capacity())} %!!"
+        proc = run(SHELL_CMD, input=msg, encoding="utf-8")
+        delay_interval_sec = 0
+    elif check_capacity() >= BATTERY_UP_THRESHOLD and is_charging():
+        msg = f"BATTERY CHARGED: {str(check_capacity())}. {extra_info()}"
+        proc = run(SHELL_CMD, input=msg, encoding="utf-8")
+        delay_interval_sec = 0
+
+    time.sleep(delay_interval_sec)
+
