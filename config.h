@@ -27,8 +27,8 @@ static const int topbar                  = 1;  /* 0 means bottom bar */
 // req pkg ttf-ubuntu-mono-nerd ttf-roboto
 //static const char *fonts[]          = { "Roboto:style=Regular:size=14" };
 //static const char dmenufont[]       = "Roboto:style=Regular:size=14";
-static const char *fonts[]          = { "DejaVu Sans Mono:size=16:bold:antialias=true" };
-static const char dmenufont[]       = "DejaVu Sans Mono: size=16:bold:antialias=true";
+static const char *fonts[]          = { "DejaVu Sans Mono:size=12:bold:antialias=true" };
+static const char dmenufont[]       = "DejaVu Sans Mono: size=12:bold:antialias=true";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -54,8 +54,8 @@ static const Rule rules[] = {
 
     { "firefox",          NULL,       NULL,       1 << 1,       False,     -1 },
     { "Firefox-esr",      NULL,       NULL,       1 << 1,       False,     -1 },
-
     { "Google-chrome",    NULL,       NULL,       1 << 1,       False,     -1 },
+
     { "TelegramDesktop",  NULL,       NULL,       1 << 3,       False,     -1 },
     { "discord",          NULL,       NULL,       1 << 3,       False,     -1 },
 
@@ -71,6 +71,8 @@ static const Rule rules[] = {
     { "libreoffice-impress", NULL,    NULL,       1 << 2,       False,     -1 },
 
     { "steam",            NULL,       NULL,       1 << 5,       False,     -1 },
+    { "obs",              NULL,       NULL,       1 << 5,       False,     -1 },
+    { "Anydesk",          NULL,       NULL,       1 << 5,       False,     -1 },
 
     { "KeePassXC",        NULL,       NULL,       1 << 8,       False,     -1 },
     { "VirtualBox Manager", NULL,     NULL,       1 << 7,       False,     -1 },
@@ -128,6 +130,8 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,   XK_c,      killclient,     {0} },
     { MODKEY|ShiftMask,   XK_q,      quit,           {0} },
     { MODKEY,             XK_b,      togglebar,      {0} },
+    { MODKEY|ShiftMask,   XK_j,      rotatestack,    {.i = +1 } },
+    { MODKEY|ShiftMask,   XK_k,      rotatestack,    {.i = -1 } },
     { MODKEY,             XK_p,      spawn,          {.v = dmenucmd } },
     { MODKEY|ShiftMask,   XK_Return, spawn,          {.v = termcmd } },
 

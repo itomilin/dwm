@@ -12,7 +12,9 @@ cp ./config.h ./Makefile dwm-6.4/
 cd ./dwm-6.4
 
 ### PATCHES
+# rewrite patch with diff -u OriginalFile UpdatedFile > PatchFile
 echo "Applying patches..."
+
 echo "fullscreen >>>>>>>>>>>>>>>>>>>>>"
 patch -p1 < ../patches/dwm-fullscreen-6.2.diff
 
@@ -33,6 +35,9 @@ patch -p1 < ../patches/dwm-systray-6.4.diff
 
 echo "focusonclick >>>>>>>>>>>>>>>>>>>>>>>>>>"
 patch -p1 < ../patches/dwm-focusonclick-20200110-61bb8b2.diff
+
+echo "rotate stack >>>>>>>>>>>>>>>>>>>>>>>>>>"
+patch -p1 < ../patches/rotatestack-patch-new.diff
 ###
 
 make clean install
