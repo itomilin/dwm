@@ -123,6 +123,9 @@ static const char *dec_light[] = { "/usr/bin/light", "-U", "5", NULL };
 static const char *maim_full[] = { "/home/tomilin/.dwm/custom_scripts/maim_helper.sh", "full", NULL };
 static const char *maim_area[] = { "/home/tomilin/.dwm/custom_scripts/maim_helper.sh", "area", NULL };
 
+// osd time
+static const char *osd_time[] = { "~/.dwm/custom_scripts/osd_time.sh", NULL };
+
 /* ------ */
 
 static const Key keys[] = {
@@ -161,6 +164,8 @@ static const Key keys[] = {
 
     { Mod1Mask|ShiftMask, XK_4,                     spawn, {.v = maim_full       } },
     { Mod1Mask|ShiftMask, XK_3,                     spawn, {.v = maim_area       } },
+
+    { Mod1Mask|ShiftMask, XK_t,                     spawn, {.v = osd_time        } },
 
     TAGKEYS(                        XK_1,                      0)
     TAGKEYS(                        XK_2,                      1)
