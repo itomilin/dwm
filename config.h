@@ -102,6 +102,7 @@ static const Layout layouts[] = {
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
+#define HOME(rel_path) ("/home/tomilin/"  rel_path)
 
 /* commands */
 static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
@@ -120,11 +121,11 @@ static const char *inc_light[] = { "/usr/bin/light", "-A", "5", NULL };
 static const char *dec_light[] = { "/usr/bin/light", "-U", "5", NULL };
 
 // screenshots
-static const char *maim_full[] = { "/home/tomilin/.dwm/custom_scripts/maim_helper.sh", "full", NULL };
-static const char *maim_area[] = { "/home/tomilin/.dwm/custom_scripts/maim_helper.sh", "area", NULL };
+static const char *maim_full[] = { HOME(".dwm/custom_scripts/maim_helper.sh"), "full", NULL };
+static const char *maim_area[] = { HOME(".dwm/custom_scripts/maim_helper.sh"), "area", NULL };
 
 // osd time
-static const char *osd_time[] = { "~/.dwm/custom_scripts/osd_time.sh", NULL };
+static const char *osd_time[] = { HOME(".dwm/custom_scripts/osd_time.sh"), NULL };
 
 /* ------ */
 
@@ -133,13 +134,15 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,   XK_c,      killclient,     {0} },
     { MODKEY|ShiftMask,   XK_q,      quit,           {0} },
     { MODKEY,             XK_b,      togglebar,      {0} },
-    { MODKEY|ShiftMask,   XK_j,      rotatestack,    {.i = +1 } },
-    { MODKEY|ShiftMask,   XK_k,      rotatestack,    {.i = -1 } },
+
+    { Mod1Mask,           XK_Tab,    focusstack,    {.i = +1 } },
+    { Mod1Mask|ShiftMask, XK_Tab,    focusstack,    {.i = -1 } },
+
     { MODKEY,             XK_p,      spawn,          {.v = dmenucmd } },
     { MODKEY|ShiftMask,   XK_Return, spawn,          {.v = termcmd } },
 
-    { MODKEY,             XK_j,      focusstack,     {.i = +1 } },
-    { MODKEY,             XK_k,      focusstack,     {.i = -1 } },
+    { MODKEY,             XK_j,      rotatestack,     {.i = +1 } },
+    { MODKEY,             XK_k,      rotatestack,     {.i = -1 } },
 
     { MODKEY,             XK_h,      setmfact,       {.f = -0.05} },
     { MODKEY,             XK_l,      setmfact,       {.f = +0.05} },
@@ -154,18 +157,20 @@ static const Key keys[] = {
     { MODKEY,             XK_comma,  focusmon,       {.i = -1 } },
     { MODKEY,             XK_period, focusmon,       {.i = +1 } },
 
-    { 0,                  XF86XK_AudioLowerVolume,  spawn, {.v = down_volume     } },
-    { 0,                  XF86XK_AudioRaiseVolume,  spawn, {.v = up_volume       } },
-    { 0,                  XF86XK_AudioMute,         spawn, {.v = mute_speakers   } },
-    { 0,                  XF86XK_AudioMicMute,      spawn, {.v = mute_mic        } },
+    { 0,                  XF86XK_AudioLowerVolume,  spawn, {.v = down_volume   } },
+    { 0,                  XF86XK_AudioRaiseVolume,  spawn, {.v = up_volume     } },
+    { 0,                  XF86XK_AudioMute,         spawn, {.v = mute_speakers } },
+    { 0,                  XF86XK_AudioMicMute,      spawn, {.v = mute_mic      } },
 
-    { 0,                  XF86XK_MonBrightnessUp,   spawn, {.v = inc_light       } },
-    { 0,                  XF86XK_MonBrightnessDown, spawn, {.v = dec_light       } },
+    { 0,                  XF86XK_MonBrightnessUp,   spawn, {.v = inc_light     } },
+    { 0,                  XF86XK_MonBrightnessDown, spawn, {.v = dec_light     } },
 
-    { Mod1Mask|ShiftMask, XK_4,                     spawn, {.v = maim_full       } },
-    { Mod1Mask|ShiftMask, XK_3,                     spawn, {.v = maim_area       } },
+    { Mod1Mask|ShiftMask, XK_4,                     spawn, {.v = maim_full     } },
+    { Mod1Mask|ShiftMask, XK_3,                     spawn, {.v = maim_area     } },
 
-    { Mod1Mask|ShiftMask, XK_t,                     spawn, {.v = osd_time        } },
+    { Mod1Mask|ShiftMask, XK_t,                     spawn, {.v = osd_time      } },
+
+    { Mod4Mask|ShiftMask, XK_space,  togglefloating, {0} },
 
     TAGKEYS(                        XK_1,                      0)
     TAGKEYS(                        XK_2,                      1)
@@ -187,7 +192,7 @@ static const Button buttons[] = {
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
 	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
-	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
+    //{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
 	{ ClkTagBar,            0,              Button1,        view,           {0} },
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
