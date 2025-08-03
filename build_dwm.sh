@@ -46,6 +46,9 @@ patch -p1 < ../patches/dwm-focusonclick-20200110-61bb8b2.diff
 echo "rotate stack >>>>>>>>>>>>>>>>>>>>>>>>>>"
 patch -p1 < ../patches/rotatestack-patch-new.diff
 
+echo "STEAM >>>>>>>>>>>>>>>>>>>>>>>>>>"
+patch -p1 < ../patches/dwm-steam-6.2.diff
+
 make install
 cd ../ && rm -Rf ./dwm-${dwm_version}
 
