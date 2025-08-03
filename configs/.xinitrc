@@ -87,14 +87,14 @@ fi
 #   sleep 10
 # done &
 
-# if [[ `which nvidia-settings` != "" ]]; then
+# if [[ $(which nvidia-settings) != "" ]]; then
 #   echo -e "Nvidia card found:\n`nvidia-smi -L`" > /tmp/nv-log.txt
 #   # base ~ 2790 -> 2940
 #   nvidia-settings -c :0 -a '[gpu:0]/GPUGraphicsClockOffset[4]=150' | tee -a /tmp/nv-log.txt
-# 
+#
 #   # base = 10501 -> 11001
 #   #nvidia-settings -c :0 -a '[gpu:0]/GPUMemoryTransferRateOffset[4]=1000'
-# 
+#
 #   # base = 10501 -> 12501
 #   nvidia-settings -c :0 -a '[gpu:0]/GPUMemoryTransferRateOffset[4]=3000' | tee -a /tmp/nv-log.txt
 # fi
