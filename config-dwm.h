@@ -16,8 +16,8 @@ static const int showsystray             = 1;  /* 0 means no systray */
 static const int showbar                 = 1;  /* 0 means no bar */
 static const int topbar                  = 1;  /* 0 means bottom bar */
 
-// req pkg ttf-ubuntu-mono-nerd ttf-roboto
-// ttf-dejavu
+// fonts: ttf-ubuntu-mono-nerd ttf-roboto ttf-dejavu ttf-libetation
+// Liberation Mono:style=Bold:size=14:antialias=true
 static const char *fonts[]      = { "DejaVu Sans Mono:size=12:bold:antialias=true" };
 static const char dmenufont[]   = "DejaVu Sans Mono: size=13:bold:antialias=true";
 static const char col_gray1[]   = "#222222";
