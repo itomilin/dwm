@@ -6,7 +6,7 @@ if [[ -d /boot ]]; then
   rm -Rfv {/boot/efi,/boot/EFI,/boot/loader}
   bootctl install # by default create /efi and /boot into /boot
 else
-  echo "ERR. /boot not mount"
+  echo "ERR. No such /boot dir"
   exit 1
 fi
 
