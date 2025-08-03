@@ -1,16 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 #include <X11/XF86keysym.h>
 
-/* alt-tab configuration */
-//static const unsigned int tabModKey 		= 0x40;	/* if this key is hold the alt-tab functionality stays acitve. This key must be the same as key that is used to active functin altTabStart `*/
-//static const unsigned int tabCycleKey 		= 0x17;	/* if this key is hit the alt-tab program moves one position forward in clients stack. This key must be the same as key that is used to active functin altTabStart */
-//static const unsigned int tabPosY 			= 1;	/* tab position on Y axis, 0 = bottom, 1 = center, 2 = top */
-//static const unsigned int tabPosX 			= 1;	/* tab position on X axis, 0 = left, 1 = center, 2 = right */
-//static const unsigned int maxWTab 			= 600;	/* tab menu width */
-//static const unsigned int maxHTab 			= 200;	/* tab menu height */
-
 /* appearance */
-static const unsigned int borderpx       = 2;  /* border pixel of windows */
+static const unsigned int borderpx       = 1;  /* border pixel of windows */
 static const unsigned int snap           = 32; /* snap pixel */
 static const unsigned int gappx          = 0; /* gaps between windows */
 
@@ -25,46 +17,42 @@ static const int showbar                 = 1;  /* 0 means no bar */
 static const int topbar                  = 1;  /* 0 means bottom bar */
 
 // req pkg ttf-ubuntu-mono-nerd ttf-roboto
-//static const char *fonts[]          = { "Roboto:style=Regular:size=14" };
-//static const char dmenufont[]       = "Roboto:style=Regular:size=14";
-static const char *fonts[]          = { "DejaVu Sans Mono:size=12:bold:antialias=true" };
-static const char dmenufont[]       = "DejaVu Sans Mono: size=12:bold:antialias=true";
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
-static const char col_fuchsia[]     = "#FF00FF";
-static const char *colors[][3]      = {
-
-	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2   },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_fuchsia },
+// ttf-dejavu
+static const char *fonts[]      = { "DejaVu Sans Mono:size=12:bold:antialias=true" };
+static const char dmenufont[]   = "DejaVu Sans Mono: size=13:bold:antialias=true";
+static const char col_gray1[]   = "#222222";
+static const char col_gray2[]   = "#444444";
+static const char col_gray3[]   = "#bbbbbb";
+static const char col_gray4[]   = "#eeeeee";
+static const char col_cyan[]    = "#005577";
+static const char col_fuchsia[] = "#FF00FF";
+static const char *colors[][3]  = {
+    /*               fg         bg         border   */
+    [SchemeNorm] = { col_gray3, col_gray1, col_gray2   },
+    [SchemeSel]  = { col_gray4, col_cyan,  col_fuchsia },
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" };
 
 // get WM_CLASS with cmd (second): xprop WM_CLASS
 static const Rule rules[] = {
-    { "Gimp",             NULL,       NULL,       0,            False,     -1 },
-    { "Pavucontrol",      NULL,       NULL,       0,            True,      -1 },
-    { "Xfce4-terminal",   NULL,       NULL,       1 << 0,       False,     -1 },
+    // { "Gimp",             NULL,       NULL,       0,            False,     -1 },
+    { "pavucontrol",      NULL,       NULL,       0,            True,      -1 },
     { "st-256color",      NULL,       NULL,       1 << 0,       False,     -1 },
 
     { "firefox",          NULL,       NULL,       1 << 1,       False,     -1 },
-    { "Firefox-esr",      NULL,       NULL,       1 << 1,       False,     -1 },
-    { "Google-chrome",    NULL,       NULL,       1 << 1,       False,     -1 },
+    // { "Firefox-esr",      NULL,       NULL,       1 << 1,       False,     -1 },
 
     { "TelegramDesktop",  NULL,       NULL,       1 << 3,       False,     -1 },
-    { "discord",          NULL,       NULL,       1 << 3,       False,     -1 },
+    // { "discord",          NULL,       NULL,       1 << 3,       False,     -1 },
 
     { "Thunar",           NULL,       NULL,       1 << 4,       False,     -1 },
     { "FileZilla",        NULL,       NULL,       1 << 4,       False,     -1 },
     { "Nsxiv",            NULL,       NULL,       0,            True,      -1 },
-    { "Sxiv",             NULL,       NULL,       0,            True,      -1 },
 
     { "Geany",            NULL,       NULL,       1 << 2,       False,     -1 },
+    { "Code",             NULL,       NULL,       1 << 2,       False,     -1 },
     { "libreoffice-writer", NULL,     NULL,       1 << 2,       False,     -1 },
     { "libreoffice-calc", NULL,       NULL,       1 << 2,       False,     -1 },
     { "libreoffice-draw", NULL,       NULL,       1 << 2,       False,     -1 },
@@ -72,24 +60,24 @@ static const Rule rules[] = {
 
     { "steam",            NULL,       NULL,       1 << 5,       False,     -1 },
     { "obs",              NULL,       NULL,       1 << 5,       False,     -1 },
-    { "Anydesk",          NULL,       NULL,       1 << 5,       False,     -1 },
+    { "Rustdesk",         NULL,       NULL,       1 << 5,       False,     -1 },
 
     { "KeePassXC",        NULL,       NULL,       1 << 8,       False,     -1 },
+    { "Virt-viewer",      NULL,       NULL,       1 << 7,       False,     -1 },
     { "VirtualBox Manager", NULL,     NULL,       1 << 7,       False,     -1 },
-    { "VirtualBox Machine", NULL,     NULL,       1 << 7,       False,     -1 },
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
-static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
-static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
+static const float mfact        = 0.55; /* factor of master area size [0.05..0.95] */
+static const int nmaster        = 1;    /* number of clients in master area */
+static const int resizehints    = 0;    /* 1 means respect size hints in tiled resizals */
+static const int lockfullscreen = 1;    /* 1 will force focus on the fullscreen window */
 
 static const Layout layouts[] = {
-	/* symbol     arrange function */
-	{ "[]=T",      tile },    /* first entry is default */
-	{ "><>F",      NULL },    /* no layout function means floating behavior */
-	{ "[M]",      monocle },
+    /* symbol arrange_function */
+    { "[]=T", tile    }, /* first entry is default */
+    { "><>F", NULL    }, /* no layout function means floating behavior */
+    { "[M]",  monocle },
 };
 
 /* key definitions */
@@ -105,15 +93,15 @@ static const Layout layouts[] = {
 #define HOME(rel_path) ("/home/tomilin/"  rel_path)
 
 /* commands */
+static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { HOME(".dwm/st"), NULL };
 
 /* custom */
-
 // control volume (laptop)
 static const char *up_volume[]     = { "/usr/bin/amixer", "-c", "0", "--", "sset", "Master", "playback", "2%+", NULL };
 static const char *down_volume[]   = { "/usr/bin/amixer", "-c", "0", "--", "sset", "Master", "playback", "2%-", NULL };
-static const char *mute_speakers[] = { "/usr/bin/amixer", "set", "Master", "toggle", NULL };
+static const char *mute_speakers[] = { HOME(".dwm/custom_scripts/amixer_sound.sh"), NULL };
 static const char *mute_mic[]      = { "/usr/bin/amixer", "set", "Capture", "toggle", NULL };
 
 // control brightness (laptop)
@@ -127,16 +115,14 @@ static const char *maim_area[] = { HOME(".dwm/custom_scripts/maim_helper.sh"), "
 // osd time
 static const char *osd_time[] = { HOME(".dwm/custom_scripts/osd_time.sh"), NULL };
 
-/* ------ */
-
 static const Key keys[] = {
     /* modifier                     key        function        argument */
     { MODKEY|ShiftMask,   XK_c,      killclient,     {0} },
     { MODKEY|ShiftMask,   XK_q,      quit,           {0} },
     { MODKEY,             XK_b,      togglebar,      {0} },
 
-    { Mod1Mask,           XK_Tab,    focusstack,    {.i = +1 } },
-    { Mod1Mask|ShiftMask, XK_Tab,    focusstack,    {.i = -1 } },
+    { Mod1Mask,           XK_grave,  focusstack,    {.i = +1 } },
+    { Mod1Mask|ShiftMask, XK_grave,  focusstack,    {.i = -1 } },
 
     { MODKEY,             XK_p,      spawn,          {.v = dmenucmd } },
     { MODKEY|ShiftMask,   XK_Return, spawn,          {.v = termcmd } },
@@ -181,22 +167,23 @@ static const Key keys[] = {
     TAGKEYS(                        XK_7,                      6)
     TAGKEYS(                        XK_8,                      7)
     TAGKEYS(                        XK_9,                      8)
+    TAGKEYS(                        XK_0,                      9)
 };
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static const Button buttons[] = {
-	/* click                event mask      button          function        argument */
-	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
-	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
-	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
-	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
-    //{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
-	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
-	{ ClkTagBar,            0,              Button1,        view,           {0} },
-	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
-	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
-	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+    /* click                event mask      button          function        argument */
+    { ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
+    { ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+    { ClkWinTitle,          0,              Button2,        zoom,           {0} },
+    { ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
+    { ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
+    // { ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
+    { ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
+    { ClkTagBar,            0,              Button1,        view,           {0} },
+    { ClkTagBar,            0,              Button3,        toggleview,     {0} },
+    { ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
+    { ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
 

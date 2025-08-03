@@ -4,15 +4,18 @@
 # Reqs xosd pkg
 ###
 
-from subprocess import run, PIPE
+from subprocess import run, Popen
 import time
+import os
 
 BATTERY_LOW_THRESHOLD = 8
 BATTERY_UP_THRESHOLD = 95
 SHELL_CMD = [ "/usr/bin/osd_cat",
+              "--delay=10", # in seconds
               "--align=center",
               "--pos=middle",
               "--font=-*-*-bold-*-*-*-96-120-*-*-*-*-*-*" ]
+beep_path = os.path.expanduser('~/.dwm/custom_scripts/beep.wav')
 
 def is_charging():
     with open("/sys/class/power_supply/BAT0/status") as f:
@@ -22,6 +25,14 @@ def is_charging():
 def check_capacity():
     with open("/sys/class/power_supply/BAT0/capacity") as f:
         return int(f.read())
+
+
+def battery_left():
+    with open("/sys/class/power_supply/BAT0/energy_now") as f:
+        energy_now = int(f.read())
+    with open("/sys/class/power_supply/BAT0/power_now") as f:
+        power_now = int(f.read())
+    return round(energy_now / power_now, 2) # TODO
 
 
 def extra_info():
@@ -38,8 +49,9 @@ def extra_info():
 
 
 while True:
-    delay_interval_sec = 15
+    delay_interval_sec = 60
     if check_capacity() <= BATTERY_LOW_THRESHOLD and not is_charging():
+        Popen(['/usr/bin/aplay', '--device=pulse', beep_path])
         msg = f"!!BATTERY LOW. REMAINING {str(check_capacity())} %!!"
         proc = run(SHELL_CMD, input=msg, encoding="utf-8")
         delay_interval_sec = 0

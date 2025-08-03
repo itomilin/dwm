@@ -1,0 +1,34 @@
+# st - simple terminal
+# See LICENSE file for copyright and license details.
+.POSIX:
+
+include config.mk
+
+SRC = st.c x.c
+OBJ = $(SRC:.c=.o)
+
+options:
+	@echo st build options:
+	@echo "CFLAGS   = ${CFLAGS}"
+	@echo "LDFLAGS  = ${LDFLAGS}"
+	@echo "CC       = ${CC}"
+
+.c.o:
+	$(CC) $(STCFLAGS) -c $<
+
+st.o: config.h st.h win.h
+x.o: arg.h config.h st.h win.h
+
+$(OBJ): config.h config.mk
+
+st: $(OBJ)
+	$(CC) -o $@ $(OBJ) $(STLDFLAGS)
+
+install: options st
+	cp -f st ${HOME}/.dwm
+	chmod 755 ${HOME}/.dwm/st
+
+uninstall:
+	rm -f ${HOME}/.dwm/st
+
+.PHONY: install uninstall
