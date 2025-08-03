@@ -99,6 +99,11 @@ fi
 #   nvidia-settings -c :0 -a '[gpu:0]/GPUMemoryTransferRateOffset[4]=3000' | tee -a /tmp/nv-log.txt
 # fi
 
+# https://superuser.com/questions/506186/dmenu-doesnt-set-environment-variable-as-per-my-bash-profile-when-running-emac
+export DXVK_FRAME_RATE=144
+# export MANGOHUD=1
+export MANGOHUD_CONFIG="toggle_hud=Shift_R+KP_Divide,position=top-right,engine_version,wine,winesync,cpu_power,cpu_mhz,cpu_temp,core_load,gpu_temp,gpu_junction_temp,gpu_mem_temp,gpu_power,gpu_fan,throttling_status_graph,gpu_core_clock,ram,vram,gpu_mem_clock,io_read,io_write,gamemode"
+
 exec /home/$(id -un)/.dwm/dwm
 xsetroot -name ""
 
