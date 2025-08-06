@@ -78,6 +78,7 @@ rfkill_stat () {
 laptop_id=10
 if [ $(cat /sys/class/dmi/id/chassis_type) -eq $laptop_id ]; then
   /home/$(id -un 1000)/.dwm/custom_scripts/battery_low_power &
+  xinput set-prop 11 "libinput Accel Speed" 1 # thinkpad only
 fi
 
 # while :; do
