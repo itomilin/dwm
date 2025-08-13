@@ -10,7 +10,6 @@ import os
 
 BATTERY_LOW_THRESHOLD = 8
 BATTERY_UP_THRESHOLD = 95
-DELAY_INTERVAL_SEC = 60
 SHELL_CMD = [ "/usr/bin/osd_cat",
               "--delay=10", # in seconds
               "--align=center",
@@ -48,6 +47,7 @@ def extra_info():
 
 
 while True:
+    delay_interval_sec = 60
     if check_capacity() <= BATTERY_LOW_THRESHOLD and not is_charging():
         Popen(['/usr/bin/aplay', '--device=pulse', beep_path])
         msg = f"!!BATTERY LOW. REMAINING {str(check_capacity())} %!!"
@@ -58,5 +58,5 @@ while True:
         msg = f"BATTERY CHARGED: {str(check_capacity())}\nCycles: {extra_info[0]}\nDegradation: {extra_info[1]}%"
         proc = run(SHELL_CMD, input=msg, encoding="utf-8")
         delay_interval_sec = 0
-    time.sleep(DELAY_INTERVAL_SEC)
+    time.sleep(delay_interval_sec)
 
