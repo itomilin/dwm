@@ -1,0 +1,70 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "./scripts/build.sh",
+            "args": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "run",
+            "type": "shell",
+            "command": "./scripts/run.sh",
+            "args": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Valgrind",
+            "type": "shell",
+            "command": "./scripts/valgrind.sh",
+            // "command": "valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./your_executable",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        }
+        // {
+        //     "label": "debug",
+        //     "type": "shell",
+        //     "command": "gdb",
+        //     "args": [
+        //         "--args",
+        //         "./build/snake"
+        //     ],
+        //     "presentation": {
+        //         "echo": true,
+        //         "reveal": "always",
+        //         "focus": false,
+        //         "panel": "new"
+        //     },
+        //     "options": {
+        //         "cwd": "${workspaceFolder}"
+        //     },
+        //     "dependsOn": "build"
+        // }
+    ]
+}

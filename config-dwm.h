@@ -46,14 +46,16 @@ static const Rule rules[] = {
     // { "Firefox-esr",      NULL,       NULL,       1 << 1,       False,     -1 },
 
     { "TelegramDesktop",  NULL,       NULL,       1 << 3,       False,     -1 },
+    { "Mumble",           NULL,       NULL,       1 << 3,       False,     -1 },
     // { "discord",          NULL,       NULL,       1 << 3,       False,     -1 },
 
     { "Thunar",           NULL,       NULL,       1 << 4,       False,     -1 },
     { "FileZilla",        NULL,       NULL,       1 << 4,       False,     -1 },
+    { "qBittorrent",      NULL,       NULL,       1 << 9,       False,     -1 },
     { "Nsxiv",            NULL,       NULL,       0,            True,      -1 },
 
     { "Geany",            NULL,       NULL,       1 << 2,       False,     -1 },
-    { "Code",             NULL,       NULL,       1 << 2,       False,     -1 },
+    { "code-oss",         NULL,       NULL,       1 << 2,       False,     -1 },
     { "libreoffice-writer", NULL,     NULL,       1 << 2,       False,     -1 },
     { "libreoffice-calc", NULL,       NULL,       1 << 2,       False,     -1 },
     { "libreoffice-draw", NULL,       NULL,       1 << 2,       False,     -1 },
@@ -65,7 +67,10 @@ static const Rule rules[] = {
 
     { "KeePassXC",        NULL,       NULL,       1 << 8,       False,     -1 },
     { "Virt-viewer",      NULL,       NULL,       1 << 7,       False,     -1 },
+    { "Virt-manager",     NULL,       NULL,       1 << 7,       False,     -1 },
     { "VirtualBox Manager", NULL,     NULL,       1 << 7,       False,     -1 },
+
+    { "org.remmina.Remmina", NULL,    NULL,       1 << 9,       False,     -1 },
 };
 
 /* layout(s) */
@@ -73,6 +78,7 @@ static const float mfact        = 0.55; /* factor of master area size [0.05..0.9
 static const int nmaster        = 1;    /* number of clients in master area */
 static const int resizehints    = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1;    /* 1 will force focus on the fullscreen window */
+static const int refreshrate    = 120;  /* refresh rate (per second) for client move/resize */
 
 static const Layout layouts[] = {
     /* symbol arrange_function */
@@ -102,7 +108,7 @@ static const char *termcmd[]  = { HOME(".dwm/st"), NULL };
 // control volume (laptop)
 static const char *up_volume[]     = { "/usr/bin/amixer", "-c", "0", "--", "sset", "Master", "playback", "2%+", NULL };
 static const char *down_volume[]   = { "/usr/bin/amixer", "-c", "0", "--", "sset", "Master", "playback", "2%-", NULL };
-static const char *mute_speakers[] = { HOME(".dwm/custom_scripts/amixer_sound.sh"), NULL };
+static const char *mute_speakers[] = { HOME(".dwm/scripts/amixer_sound.sh"), NULL };
 static const char *mute_mic[]      = { "/usr/bin/amixer", "set", "Capture", "toggle", NULL };
 
 // control brightness (laptop)
@@ -110,11 +116,11 @@ static const char *inc_light[] = { "/usr/bin/light", "-A", "5", NULL };
 static const char *dec_light[] = { "/usr/bin/light", "-U", "5", NULL };
 
 // screenshots
-static const char *maim_full[] = { HOME(".dwm/custom_scripts/maim_helper.sh"), "full", NULL };
-static const char *maim_area[] = { HOME(".dwm/custom_scripts/maim_helper.sh"), "area", NULL };
+static const char *maim_full[] = { HOME(".dwm/scripts/maim_helper.sh"), "full", NULL };
+static const char *maim_area[] = { HOME(".dwm/scripts/maim_helper.sh"), "area", NULL };
 
 // osd time
-static const char *osd_time[] = { HOME(".dwm/custom_scripts/osd_time.sh"), NULL };
+static const char *osd_time[] = { HOME(".dwm/scripts/osd_time.sh"), NULL };
 
 static const Key keys[] = {
     /* modifier                     key        function        argument */
@@ -152,8 +158,8 @@ static const Key keys[] = {
     { 0,                  XF86XK_MonBrightnessUp,   spawn, {.v = inc_light     } },
     { 0,                  XF86XK_MonBrightnessDown, spawn, {.v = dec_light     } },
 
-    { Mod1Mask|ShiftMask, XK_4,                     spawn, {.v = maim_full     } },
-    { Mod1Mask|ShiftMask, XK_3,                     spawn, {.v = maim_area     } },
+    { Mod1Mask|ShiftMask, XK_3,                     spawn, {.v = maim_full     } },
+    { Mod1Mask|ShiftMask, XK_4,                     spawn, {.v = maim_area     } },
 
     { Mod1Mask|ShiftMask, XK_t,                     spawn, {.v = osd_time      } },
 

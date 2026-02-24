@@ -1,0 +1,37 @@
+[
+    {
+        "key": "ctrl+p",
+        "command": "selectPrevSuggestion",
+        "when": "suggestWidgetVisible"
+    },
+    {
+        "key": "ctrl+n",
+        "command": "selectNextSuggestion",
+        "when": "suggestWidgetVisible"
+    },
+    {
+        "key": "f9",
+        "command": "workbench.action.tasks.runTask",
+        "args": "build",
+        "when": "!inDebugMode"
+    },
+    // {
+    //     "key": "f9",
+    //     "command": "runCommands",
+    //     "args": {
+    //         "commands": [
+    //             {
+    //                 "command": "workbench.action.tasks.runTask",
+    //                 "args": "build" // match by task label
+    //             }
+    //         ]
+    //     },
+    //     "when": "!inDebugMode"
+    // },
+    {
+        "key": "ctrl+f5",
+        "command": "workbench.action.tasks.runTask",
+        "args": "run",
+        "when": "!inDebugMode"
+    }
+]

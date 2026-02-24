@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 ###
-# Reqs pkgs: xosd
+# Reqs pkgs: xosd, alsa
 ###
 
 from subprocess import run, Popen
@@ -11,11 +11,10 @@ import os
 BATTERY_LOW_THRESHOLD = 8
 BATTERY_UP_THRESHOLD = 95
 SHELL_CMD = [ "/usr/bin/osd_cat",
-              "--delay=10", # in seconds
               "--align=center",
               "--pos=middle",
               "--font=-*-*-bold-*-*-*-96-120-*-*-*-*-*-*" ]
-beep_path = os.path.expanduser('~/.dwm/custom_scripts/bat_low_snd.wav')
+beep_path = os.path.expanduser('~/.dwm/scripts/bat_low_snd.wav')
 
 def is_charging():
     with open("/sys/class/power_supply/BAT0/status") as f:
@@ -27,14 +26,6 @@ def check_capacity():
         return int(f.read())
 
 
-def battery_left():
-    with open("/sys/class/power_supply/BAT0/energy_now") as f:
-        energy_now = int(f.read())
-    with open("/sys/class/power_supply/BAT0/power_now") as f:
-        power_now = int(f.read())
-    return round(energy_now / power_now, 2) # TODO
-
-
 def extra_info():
     with open("/sys/class/power_supply/BAT0/energy_full") as f:
         energy_full = int(f.read())
@@ -43,19 +34,19 @@ def extra_info():
     with open("/sys/class/power_supply/BAT0/cycle_count") as f:
         cycle_count = int(f.read())
     degradation = int(100 - (energy_full / energy_full_design * 100))
-    return (cycle_count, degradation)
+    return cycle_count, degradation
 
 
 while True:
     delay_interval_sec = 60
     if check_capacity() <= BATTERY_LOW_THRESHOLD and not is_charging():
-        Popen(['/usr/bin/aplay', '--device=pulse', beep_path])
-        msg = f"!!BATTERY LOW. REMAINING {str(check_capacity())} %!!"
+        run(['/usr/bin/aplay', '--device=pulse', beep_path], check=True)
+        msg = f"!!BATTERY LOW. REMAINING {check_capacity()} %!!"
         proc = run(SHELL_CMD, input=msg, encoding="utf-8")
         delay_interval_sec = 0
     elif check_capacity() >= BATTERY_UP_THRESHOLD and is_charging():
-        extra_info = extra_info()
-        msg = f"BATTERY CHARGED: {str(check_capacity())}\nCycles: {extra_info[0]}\nDegradation: {extra_info[1]}%"
+        cycles, degradation = extra_info()
+        msg = f"BATTERY CHARGED\nCycles: {cycles}\nDegradation: {degradation}%"
         proc = run(SHELL_CMD, input=msg, encoding="utf-8")
         delay_interval_sec = 0
     time.sleep(delay_interval_sec)
